@@ -47,8 +47,8 @@ EOF
 dnf install anydesk
 
 
-#Reset media shortcuts
-#dconf load /org/gnome/settings-daemon/plugins/media-keys/ < keybindings-media-keys.dconf
+#Reset media shortcuts(Use this for flameshot to ptr Scr shortcut)
+dconf load /org/gnome/settings-daemon/plugins/media-keys/ < keybindings-media-keys.dconf
 
 echo "In order to install gnome shell etensions you need to restart"
 echo "TO-DO"
