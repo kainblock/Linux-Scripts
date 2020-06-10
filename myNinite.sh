@@ -11,15 +11,15 @@ dnf install -y gnome-tweak-tool
 
 # Sublime text
 rpm -v --import https://download.sublimetext.com/sublimehq-rpm-pub.gpg
-dnf config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo
-dnf install sublime-text
+dnf -y config-manager --add-repo https://download.sublimetext.com/rpm/stable/x86_64/sublime-text.repo 
+dnf -y install sublime-text
 
 #TeamViewer
 #wget https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
 #dnf -y install teamviewer.x86_64.rpm
 
 #Discord
-dnf copr enable tcg/discord 
+dnf copr enable tcg/discord -y
 dnf install Discord-installer -y
 systemctl enable --now discord-installer
 
@@ -44,8 +44,12 @@ repo_gpgcheck=1
 gpgkey=https://keys.anydesk.com/repos/RPM-GPG-KEY
 EOF
 
-dnf install anydesk
+dnf install -y anydesk
 
+
+#SimpleScreenRecorder
+dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+dnf install simplescreenrecorder
 
 #Reset media shortcuts(Use this for flameshot to ptr Scr shortcut)
 dconf load /org/gnome/settings-daemon/plugins/media-keys/ < keybindings-media-keys.dconf
