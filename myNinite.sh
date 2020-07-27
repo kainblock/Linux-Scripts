@@ -2,6 +2,10 @@
 dnf update -y
 
 
+
+#INSTALL PACKAGES
+
+
 #Gnome extension Native Host Connector
 dnf install -y chrome-gnome-shell
 
@@ -51,10 +55,41 @@ dnf install -y anydesk
 dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 dnf install simplescreenrecorder
 
-#Reset media shortcuts(Use this for flameshot to ptr Scr shortcut)
+#SETTINGS
 dconf load /org/gnome/settings-daemon/plugins/media-keys/ < keybindings-media-keys.dconf
 
-echo "In order to install gnome shell etensions you need to restart"
-echo "TO-DO"
-echo "1.Add flameshot to printscreen shortcut. command is 'flameshot gui'"
-echo "2.Go to http://extension.gnome.org and install 'miniview' and 'workspace isolation'"
+
+
+#GNOME SHELL EXTESNIONS
+
+extensionDir=~/.local/share/gnome-shell/extensions
+
+
+
+#miniview gnome shell extension
+wget https://github.com/iamlemec/miniview/archive/master.zip
+uuid=$(unzip -c master.zip miniview-master/metadata.json |grep uuid| cut -d \" -f4)
+
+mkdir -p  $extensionDir/$uuid
+unzip -q $(pwd)/master.zip miniview-master/* -d $extensionDir/$uuid
+mv $extensionDir/$uuid/miniview-master/* $extensionDir/$uuid/miniview-master/../
+rm -Rf $extensionDir/$uuid/miniview-master/
+gnome-extensions enable $uuid
+rm master.zip
+
+
+
+
+#isolated Workspaces extension
+
+wget https://github.com/N-Yuki/gnome-shell-extension-workspace-isolated-dash/archive/master.zip
+uuid=$(unzip -c master.zip gnome-shell-extension-workspace-isolated-dash-master/workspace-isolated-dash/metadata.json |grep uuid| cut -d \" -f4);echo $uuid
+mkdir -p  $extensionDir/$uuid
+unzip -q $(pwd)/master.zip gnome-shell-extension-workspace-isolated-dash-master/workspace-isolated-dash/* -d $extensionDir/$uuid
+mv $extensionDir/$uuid/gnome-shell-extension-workspace-isolated-dash-master/workspace-isolated-dash/* $extensionDir/$uuid/gnome-shell-extension-workspace-isolated-dash-master/workspace-isolated-dash/../../
+rm -Rf $extensionDir/$uuid/gnome-shell-extension-workspace-isolated-dash-master/
+gnome-extensions enable $uuid
+rm master.zip
+
+
+echo "Log out and Log in to activate extesnios"
